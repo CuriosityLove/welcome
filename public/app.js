@@ -123,7 +123,7 @@ function overviewHTML(){
     rows.push({t:"Agreement", d: s==="signed" ? "Signed and on file." : "Review and sign the engagement agreement.",
       st:s, act: s==="pending" ? (client.agreement.link ? `<a class="btn sm" href="${esc(client.agreement.link)}" target="_blank" rel="noopener">Review and sign</a>` : "") : ""});
   }
-  rows.push({t:"Onboarding brief", d: sent ? `Received ${new Date(sent).toLocaleDateString(undefined,{month:"short",day:"numeric"})}.` : `About twenty minutes. ${a} of ${t} questions answered.`,
+  rows.push({t:"Onboarding brief", d: sent ? `Received ${new Date(sent).toLocaleDateString(undefined,{month:"short",day:"numeric"})}.` : `About ten minutes. ${a} of ${t} questions answered.`,
     st:briefState, act:`<button class="btn sm${sent?" ghost":""}" data-start>${sent ? "View answers" : a ? "Continue" : "Start"}</button>`});
   if (client.kickoff){
     const k = client.kickoff;
@@ -283,7 +283,7 @@ function renderAdmin(){
     const h = await sha(s+":"+pw);
     const J = JSON.stringify;
     const entry = `  ${J(s)}: {\n    name: ${J(name)}, hash: "${h}",\n    lead: ${J(v("a_lead"))}, engagement: ${J(v("a_eng"))},\n    uploadLink: ${J(v("a_up"))},\n    agreement: { status: "pending", link: ${J(v("a_agr"))} },\n    kickoff: { date: "", link: ${J(v("a_cal"))} }\n  },`;
-    const msg = `Welcome to Curiosity.Love. Your client portal is ready:\n${STUDIO.domain}/${s}\n\nPassword: ${pw}\n\nInside you will find your onboarding brief and agreement. The brief takes about twenty minutes and saves as you go.`;
+    const msg = `Welcome to Curiosity.Love. Your client portal is ready:\n${STUDIO.domain}/${s}\n\nPassword: ${pw}\n\nInside you will find your onboarding brief and agreement. The brief takes about ten minutes and saves as you go.`;
     $("#admOut").innerHTML = `<div class="out"><div class="mono">1 · Add to CLIENTS</div><pre>${esc(entry)}</pre>
       <div class="mono" style="margin-top:12px">2 · Send to the client</div><pre>${esc(msg)}</pre>
       <p class="muted" style="font-size:13px;margin:8px 0 0">Later, mark progress by editing the entry: agreement status "signed", or add a kickoff date.</p></div>`;
