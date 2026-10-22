@@ -1,8 +1,8 @@
 # Curiosity.Love Client Onboarding
 
-Private, password-protected onboarding portal for Curiosity.Love clients, served at **onboarding.curiosity.love**.
+Private, password-protected onboarding brief for Curiosity.Love clients, served at **onboarding.curiosity.love**.
 
-Each client gets their own link (`onboarding.curiosity.love/client-name`) and password. Inside, they see their engagement status and complete an onboarding brief covering company, team, brand, assets, digital presence, goals, billing details and permissions. Submissions are emailed to the studio through Formspree.
+Each client gets their own link (`onboarding.curiosity.love/client-name`) and password. Inside, they complete a short brief covering company, team, brand, assets, digital presence, goals, billing details and permissions. Submissions are emailed to the studio through Formspree.
 
 ## Files
 
@@ -36,15 +36,10 @@ Every push to the main branch redeploys the site.
 ## Adding a client
 
 1. Go to `onboarding.curiosity.love/admin`.
-2. Enter the client name, a password (10+ characters), the engagement, and any links (agreement, kickoff booking, upload folder).
+2. Enter the client name, a password (10+ characters), the engagement, and an optional upload folder link.
 3. Click **Generate**. Copy the client entry into the `CLIENTS` list in `public/config.js`.
 4. Commit and push. Render redeploys in about a minute.
 5. Send the client the welcome message the admin page generated. Send the password separately if you prefer.
-
-To update a client later, edit their entry in `config.js`:
-
-- Agreement signed: change `status: "pending"` to `status: "signed"`
-- Kickoff booked: add the date, for example `date: "Nov 4, 2026 · 10am PT"`
 
 To remove access, delete the client's entry and push.
 

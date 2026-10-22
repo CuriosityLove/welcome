@@ -118,22 +118,12 @@ function overviewHTML(){
   const {t,a} = answered();
   const briefState = sent ? "sent" : a ? "draft" : "todo";
   const rows = [];
-  if (client.agreement){
-    const s = client.agreement.status === "signed" ? "signed" : "pending";
-    rows.push({t:"Agreement", d: s==="signed" ? "Signed and on file." : "Review and sign the engagement agreement.",
-      st:s, act: s==="pending" ? (client.agreement.link ? `<a class="btn sm" href="${esc(client.agreement.link)}" target="_blank" rel="noopener">Review and sign</a>` : "") : ""});
-  }
   rows.push({t:"Onboarding brief", d: sent ? `Received ${new Date(sent).toLocaleDateString(undefined,{month:"short",day:"numeric"})}.` : `About ten minutes. ${a} of ${t} questions answered.`,
     st:briefState, act:`<button class="btn sm${sent?" ghost":""}" data-start>${sent ? "View answers" : a ? "Continue" : "Start"}</button>`});
-  if (client.kickoff){
-    const k = client.kickoff;
-    rows.push({t:"Kickoff session", d: k.date ? esc(k.date) : "We schedule this once your brief is in.", st: k.date ? "booked" : (k.link ? "todo" : "soon"),
-      act: !k.date && k.link ? `<a class="btn sm ghost" href="${esc(k.link)}" target="_blank" rel="noopener">Book a time</a>` : ""});
-  }
   return `<div class="welcome">
     <div class="mono muted" style="margin-bottom:18px">Client portal · ${esc(client.name)}</div>
     <h1>${first ? `Welcome back, <em>${esc(first)}</em>.` : `Let’s <em>begin</em>.`}</h1>
-    <p class="lede">This portal holds everything we need to start well: your brief, assets, access and agreement. Your answers save on this device as you go, so you can leave and come back.</p>
+    <p class="lede">This brief gives our team the information, files and access we need to start well. Your answers save on this device as you go, so you can leave and come back.</p>
     <div class="eng">
       <div class="eng-head"><div><div class="mono muted">Engagement</div><b>${esc(client.engagement || "Curiosity.Love engagement")}</b></div>
         <div class="meta">${client.lead?`<span>Led by ${esc(client.lead)}</span>`:""}<span>${esc(STUDIO.email)}</span></div></div>
@@ -247,7 +237,7 @@ function renderDone(){
   root.innerHTML = `<section class="done">
     <div class="mono muted" style="margin-bottom:18px">Brief received</div>
     <h1>Thank you, <em>${esc(client.name)}</em>.</h1>
-    <p>Your brief is with the Curiosity.Love team. We will review everything within ${esc(STUDIO.turnaround)} and reach out to confirm our kickoff session.</p>
+    <p>Your brief is with the Curiosity.Love team. We will review everything within ${esc(STUDIO.turnaround)} and be in touch with next steps.</p>
     <p>Files to add later, or a question? Write to <b>${esc(STUDIO.email)}</b>.</p>
     <div style="margin-top:28px"><button class="btn" id="back">Back to your portal</button></div>
   </section>`;
@@ -267,8 +257,6 @@ function renderAdmin(){
       <div class="f"><label for="a_pw">Password</label><input type="text" id="a_pw" placeholder="10 or more characters"></div>
       <div class="f"><label for="a_lead">Studio lead</label><input type="text" id="a_lead" value="Anthony Morey"></div>
       <div class="f full"><label for="a_eng">Engagement</label><input type="text" id="a_eng" placeholder="Brand strategy and website"></div>
-      <div class="f full"><label for="a_agr">Agreement link</label><input type="url" id="a_agr" placeholder="DocuSign or PandaDoc link"></div>
-      <div class="f full"><label for="a_cal">Kickoff booking link</label><input type="url" id="a_cal" placeholder="Calendly or Google booking page"></div>
       <div class="f full"><label for="a_up">Upload folder link</label><input type="url" id="a_up" placeholder="Google Drive or Dropbox file request link"></div>
       <div class="full"><button class="btn" type="submit">Generate</button></div>
     </form>
@@ -282,11 +270,10 @@ function renderAdmin(){
     if(!name||!s||pw.length<10){ $("#admOut").innerHTML='<div class="err">Add a client name and a password of at least 10 characters.</div>'; return; }
     const h = await sha(s+":"+pw);
     const J = JSON.stringify;
-    const entry = `  ${J(s)}: {\n    name: ${J(name)}, hash: "${h}",\n    lead: ${J(v("a_lead"))}, engagement: ${J(v("a_eng"))},\n    uploadLink: ${J(v("a_up"))},\n    agreement: { status: "pending", link: ${J(v("a_agr"))} },\n    kickoff: { date: "", link: ${J(v("a_cal"))} }\n  },`;
-    const msg = `Welcome to Curiosity.Love. Your client portal is ready:\n${STUDIO.domain}/${s}\n\nPassword: ${pw}\n\nInside you will find your onboarding brief and agreement. The brief takes about ten minutes and saves as you go.`;
+    const entry = `  ${J(s)}: {\n    name: ${J(name)}, hash: "${h}",\n    lead: ${J(v("a_lead"))}, engagement: ${J(v("a_eng"))},\n    uploadLink: ${J(v("a_up"))}\n  },`;
+    const msg = `Welcome to Curiosity.Love. Your client portal is ready:\n${STUDIO.domain}/${s}\n\nPassword: ${pw}\n\nThe brief takes about ten minutes and saves as you go.`;
     $("#admOut").innerHTML = `<div class="out"><div class="mono">1 · Add to CLIENTS</div><pre>${esc(entry)}</pre>
-      <div class="mono" style="margin-top:12px">2 · Send to the client</div><pre>${esc(msg)}</pre>
-      <p class="muted" style="font-size:13px;margin:8px 0 0">Later, mark progress by editing the entry: agreement status "signed", or add a kickoff date.</p></div>`;
+      <div class="mono" style="margin-top:12px">2 · Send to the client</div><pre>${esc(msg)}</pre></div>`;
   };
 }
 
