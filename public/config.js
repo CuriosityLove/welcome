@@ -31,4 +31,11 @@ const CLIENTS = {
     agreement: { status: "signed", link: "" },
     kickoff: { date: "", link: "" }
   },
+     "leovo-group": {
+    name: "Leovo Group", hash: "79f37a8d99e9e93cead4fd08e7528a8dbdd26ae379ac59fe464d082d53cabe1c",
+    lead: "Anthony Morey", engagement: "Brand Development",
+    uploadLink: "https://drive.google.com/drive/folders/1-DyUwvgWcHToSZab-2LN5jMBy1JlaPN5?usp=drive_link",
+    agreement: { status: "pending", link: "" },
+    kickoff: { date: "", link: "" }
+  },
 };
